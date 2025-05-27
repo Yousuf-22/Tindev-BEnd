@@ -1,19 +1,17 @@
 const express = require("express");
 const connectDB = require("./config/database");
 const cookieParser = require("cookie-parser");
-const cors = require("cors");
 
 const app = express();
 
-// to handle JSON data we need a middleware
-// this take a JSON and converted into js object
-
+const cors = require("cors");
 app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -27,12 +25,11 @@ app.use("/", profileRouter);
 app.use("/", requestsRouter);
 app.use("/", userRouter);
 
-// first DB connnection then server start listening
 connectDB()
   .then(() => {
     console.log("Database connection successfully... ");
-    app.listen(3000, () => {
-      console.log("Server Running on 3000 port");
+    app.listen(7777, () => {
+      console.log("Server Running on 7777 port");
     });
   })
   .catch((err) => {
