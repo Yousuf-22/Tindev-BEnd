@@ -15,7 +15,6 @@ authRouter.post("/signup", async (req, res) => {
 
     // Encrypt The Password
     const passwordHash = await bcrypt.hash(password, 10);
-    console.log(passwordHash);
 
     // created a new instance of the User model
     const user = new User({
@@ -28,8 +27,12 @@ authRouter.post("/signup", async (req, res) => {
     if (!validator.isEmail(emailId)) {
       throw new Error("Wrong Email format");
     }
-    await user.save();
-    res.send("User added successfully");
+    const savedUser = await user.save();
+    const token = await savedUser.getJWT();
+
+    res.cookie("token", token, { expires: new Date(Date.now() + 8 * 3600000) });
+
+    res.json({ message: "User Added Successful !", data: savedUser });
   } catch (err) {
     if (err.code === 11000) {
       res.status(400).send("Email already exist");
