@@ -3,6 +3,7 @@ const { userAuth } = require("../middlewares/auth");
 const ConnectionRequest = require("../models/connnectionRequest");
 const User = require("../models/user");
 const requestsRouter = express.Router();
+const sendEmail = require("../utils/sendEmail");
 
 requestsRouter.post(
   "/request/send/:status/:toUserId",
@@ -41,6 +42,12 @@ requestsRouter.post(
       });
 
       const data = await ConnectionData.save();
+      const emailRes = await sendEmail.run(
+        "A new Firend request from " + req.user.firstName,
+        req.user.firstName + " " + status + " " + toUser.firstName,
+        data
+      );
+
       res.json({
         message: req.user.firstName + " " + status + " " + toUser.firstName,
         data,

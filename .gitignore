@@ -1,3 +1,2 @@
-/node_modules
-temp.js
-PracCode
+node_modules
+.env
