@@ -20,6 +20,7 @@ const profileRouter = require("./routes/profile");
 const requestsRouter = require("./routes/requests");
 const userRouter = require("./routes/user");
 require("dotenv").config();
+require("./utils/cronjob.js");
 
 app.use("/", authRouter);
 app.use("/", profileRouter);
@@ -34,5 +35,5 @@ connectDB()
     });
   })
   .catch((err) => {
-    console.error("Database cannot be connnected !!! ");
+    console.error("Database cannot be connnected !!! ",err);
   });
