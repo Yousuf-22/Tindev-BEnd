@@ -20,7 +20,7 @@ const profileRouter = require("./routes/profile");
 const requestsRouter = require("./routes/requests");
 const userRouter = require("./routes/user");
 require("dotenv").config();
-require("./utils/cronjob.js");
+// require("./utils/cronjob.js");
 
 app.use("/", authRouter);
 app.use("/", profileRouter);
