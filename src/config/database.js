@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const connectDB = async () => {
   // this returns a Promise
   await mongoose.connect(process.env.DB_CONNECTION_SECRET);
+  
 };
 
 module.exports = connectDB;
