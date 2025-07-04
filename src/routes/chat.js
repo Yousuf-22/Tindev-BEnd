@@ -25,7 +25,10 @@ chatRouter.get("/chat/:targetUserId", userAuth, async (req, res) => {
       await chat.save();
     }
     res.json(chat);
-  } catch (err) {}
+  } catch (err) {
+    console.error("Chat route error:", err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 module.exports = chatRouter;
