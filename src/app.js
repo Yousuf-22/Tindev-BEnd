@@ -6,9 +6,22 @@ const cors = require("cors");
 require("dotenv").config();
 const http = require("http");
 
+const allowedOrigins = [
+  "http://localhost:5173", // for local development
+  "https://tindev.site", // for production
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+      // allow requests with no origin (like mobile apps, Postman)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
