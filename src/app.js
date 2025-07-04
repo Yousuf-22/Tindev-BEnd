@@ -6,25 +6,12 @@ const cors = require("cors");
 require("dotenv").config();
 const http = require("http");
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://tindev.site",
-  "http://tindev.site", // just in case someone uses non-https
-];
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.error("❌ Not allowed by CORS:", origin);
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
